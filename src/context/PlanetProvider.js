@@ -43,8 +43,8 @@ function PlanetProvider({ children }) {
       const moreUnnusedColumns = 3;
       const lastUnnusedColumns = 5;
       innitialColumns.splice(firstUnnusedColumns, 1);
-      innitialColumns.splice(moreUnnusedColumns, 3);
-      innitialColumns.splice(lastUnnusedColumns, 5);
+      innitialColumns.splice(moreUnnusedColumns, moreUnnusedColumns);
+      innitialColumns.splice(lastUnnusedColumns, lastUnnusedColumns);
       /*
       delete innitialColumns[0];
       delete innitialColumns[4];
