@@ -4,6 +4,9 @@ import PlanetContext from '../context/PlanetContext';
 function NumericFilter() {
   const [state, setState] = useState({});
   const {
+    availableColumns,
+    filters,
+    setAvailableColumns,
     setFilters,
     setSearchByNumeric,
     setSearchByName,
@@ -17,21 +20,52 @@ function NumericFilter() {
   }
 
   function handleClick() {
-    const filtersAreSelected = state.column && state.comparision && state.value;
+    const { column, comparison, value } = state;
+
+    const filtersAreSelected = column && comparison && value;
+
+    function deleteAvailableColumns(selectedColumn) {
+      const newAvailableColumns = [];
+      availableColumns.map(
+        (existingColumn) => {
+          if (existingColumn !== selectedColumn) newAvailableColumns.push(existingColumn);
+          return existingColumn;
+        },
+      );
+      setAvailableColumns(newAvailableColumns);
+    }
 
     if (filtersAreSelected) {
-      setFilters({
-        filterByName: {
-          name: '',
-        },
-        filterByNumericValues: [
-          {
-            column: state.column,
-            comparision: state.comparision,
-            value: state.value,
+      if (filters.filterByNumericValues[0].column === '') {
+        setFilters({
+          filterByName: {
+            name: '',
           },
-        ],
-      });
+          filterByNumericValues: [
+            {
+              column,
+              comparison,
+              value,
+            },
+          ],
+        });
+        deleteAvailableColumns(column);
+      } else {
+        setFilters({
+          filterByName: {
+            name: '',
+          },
+          filterByNumericValues: [
+            ...filters.filterByNumericValues,
+            {
+              column,
+              comparison,
+              value,
+            },
+          ],
+        });
+        deleteAvailableColumns(column);
+      }
       setSearchByNumeric(true);
       setSearchByName(false);
     }
@@ -45,15 +79,22 @@ function NumericFilter() {
         onChange={ handleChange }
       >
         <option defaultValue>Escolha uma opção</option>
+        {
+          availableColumns.map((columnName, index) => (
+            <option key={ index } value={ columnName }>{columnName}</option>
+          ))
+        }
+        {/*
         <option value="population">population</option>
         <option value="orbital period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
+        */}
       </select>
       <select
         data-testid="comparison-filter"
-        name="comparision"
+        name="comparison"
         onChange={ handleChange }
       >
         <option defaultValue>Escolha uma opção</option>

@@ -16,12 +16,17 @@ function PlanetProvider({ children }) {
       },
     ],
   });
+
+  const [availableColumns, setAvailableColumns] = useState([]);
   const [searchByName, setSearchByName] = useState(false);
   const [searchByNumeric, setSearchByNumeric] = useState(false);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
 
   const context = {
+    availableColumns,
+    filters,
     filteredPlanets,
+    setAvailableColumns,
     setFilters,
     setSearchByName,
     setSearchByNumeric,
@@ -31,7 +36,27 @@ function PlanetProvider({ children }) {
     async function fetchPlanets() {
       const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const resInJSON = await response.json();
-      setData(resInJSON.results);
+      const { results } = resInJSON;
+      setData(results);
+      const innitialColumns = Object.keys(results[0]);
+      const firstUnnusedColumns = 0;
+      const moreUnnusedColumns = 3;
+      const lastUnnusedColumns = 5;
+      innitialColumns.splice(firstUnnusedColumns, 1);
+      innitialColumns.splice(moreUnnusedColumns, 3);
+      innitialColumns.splice(lastUnnusedColumns, 5);
+      /*
+      delete innitialColumns[0];
+      delete innitialColumns[4];
+      delete innitialColumns[5];
+      delete innitialColumns[6];
+      delete innitialColumns[9];
+      delete innitialColumns[10];
+      delete innitialColumns[11];
+      delete innitialColumns[12];
+      delete innitialColumns[13];
+      */
+      setAvailableColumns(innitialColumns);
     }
     fetchPlanets();
   }, []);
