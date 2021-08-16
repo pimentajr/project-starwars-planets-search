@@ -17,10 +17,10 @@ function Provider({ children }) {
   const [listColumns, setListColumns] = useState([]);
   const [columns, setColumns] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
-  
+
   const [currOrder, setOrder] = useState('ASC');
   const [currOption, setCurrOption] = useState('name');
-  
+
   useEffect(() => {
     const fetchPlanets = async () => {
       const fetchAPI = fetch('https://swapi-trybe.herokuapp.com/api/planets/');
