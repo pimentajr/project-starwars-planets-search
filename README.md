@@ -39,10 +39,10 @@ Com os softwares instalados, siga as instruções abaixo:
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/pimentajr/project-starwars-planets-search
+git clone https://github.com/pimentajr/trybe-starwars-planets-search
 
 # Entrar no diretório
-cd project-starwars-planets-search
+cd trybe-starwars-planets-search
 
 # Baixar as dependências
 npm i
